@@ -13,10 +13,18 @@ function App() {
    */
   useEffect(() => {
     // check if localStorage data exists for todo items
-    // if localStorage exists, update state with that data
+    const getData = localStorage.getItem('todoItems')
+    if(getData){
+      setTodoItems(JSON.parse(getData))
+    }
 
+    // if localStorage exists, update state with that data 
     // check if localStorage data exists for theme
-    // if localStorage exists, update state with that data
+    // if localStorage exists, update state with that data   
+    const data = localStorage.getItem('theme')
+    if(data){
+      setTheme(data)
+    }   
   }, []);
 
   /*
@@ -28,9 +36,10 @@ function App() {
     event.preventDefault();
     const item = event.target.todoItem.value;
     const newTodoItems = [...todoItems, item]; // ...spread operator used to copy array https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax#Copy_an_array
+
     setTodoItems(newTodoItems); 
-  };
-  
+    localStorage.setItem("todoItems", JSON.stringify(newTodoItems))
+  }
   /*
    * When theme toggle button is clicked try to set localStorage with the value of theme
    * Because it's already a string you can save that value into localStorage without using JSON.stringify
